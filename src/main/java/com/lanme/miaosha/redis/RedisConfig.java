@@ -17,13 +17,17 @@ public class RedisConfig {
     /*****redis config start*******/
     @Value("${spring.redis.host}")
     private String redisHost;
-    @Value("${redis.port}")
+    @Value("${spring.redis.port}")
     private int redisPort;
-    @Value("${redis.max-idle}")
-    private int redisMaxTotal;
-    @Value("${redis.max-total}")
+    @Value("${spring.redis.timeout}")
+    private int timeout;
+    @Value("${spring.redis.password}")
+    private String password;
+    @Value("${spring.redis.jedis.pool.max-idle}")
     private int redisMaxIdle;
-    @Value("${redis.max-wait-millis}")
+    @Value("${spring.redis.jedis.pool.max-active}")
+    private int redisMaxTotal;
+    @Value("${spring.redis.jedis.pool.max-wait}")
     private int redisMaxWaitMillis;
     /*****redis config end*******/
 
