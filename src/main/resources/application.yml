@@ -58,12 +58,16 @@ spring:
         max-attempts: 3
         max-interval: 10000
         multiplier: 1.0
-#redis:
-#  host: 139.199.127.63
-#  port: 6379
-#  max-idle: 500
-#  max-total: 1000
-#  max-wait-millis: 3000
+  redis:
+    host: 139.199.127.63
+    port: 6379
+    password: LuanMingLM111andwoshinidedashu1
+    jedis:
+      pool:
+        max-idle: 10
+        max-wait: 3
+        max-active: 10
+    timeout: 3
 mybatis:
   type-aliases-package: com.lanme.miaosha.model
   mapper-locations: classpath:com/lanme/miaosha/dao/*.xml
