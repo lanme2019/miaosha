@@ -1,4 +1,4 @@
-package com.lanme.miaosha.redis;
+package com.lanme.miaosha.prefix;
 
 public class UserKey extends BasePrefix{
 

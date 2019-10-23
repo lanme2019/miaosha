@@ -1,7 +1,9 @@
 package com.lanme.miaosha.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.lanme.miaosha.prefix.KeyPrefix;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.ScanParams;
@@ -10,6 +12,7 @@ import redis.clients.jedis.ScanResult;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class RedisService {
 
     @Autowired
@@ -18,7 +21,7 @@ public class RedisService {
     /**
      * 获取当个对象
      * */
-    public <T> T get(KeyPrefix prefix, String key,  Class<T> clazz) {
+    public <T> T get(KeyPrefix prefix, String key, Class<T> clazz) {
         Jedis jedis = null;
         try {
             jedis =  jedisPool.getResource();
