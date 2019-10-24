@@ -8,7 +8,7 @@
 - 全局异常处理器的作用
 - 分布式 session 实现与作用
 - argumentreslove 的实现与作用 webmvcargumentresloves过时  实现webmvcconfig接口
--
+- 遇到的坑 数据库连接驱动8.0版本要指定  DataSource.url里面的时区  连接地址添加 serverTimezone=Asia/Shanghai
 
 # 用户表结构
 ```sql
