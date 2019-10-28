@@ -2,6 +2,7 @@ package com.lanme.miaosha.service;
 
 import com.lanme.miaosha.dao.GoodsDao;
 import com.lanme.miaosha.model.MiaoshaUser;
+import com.lanme.miaosha.model.OrderInfo;
 import com.lanme.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,11 @@ public class MiaoshaService {
     OrderService orderService;
 
     @Transactional
-    public void miaosha(MiaoshaUser user, GoodsVo goods) {
+    public OrderInfo miaosha(MiaoshaUser user, GoodsVo goods) {
         //减库存 下订单 写入秒杀订单
         goodService.reduceStock(goods);
 
-        orderService.creatStock(user,goods);
+        return orderService.creatStock(user,goods);
 
     }
 }

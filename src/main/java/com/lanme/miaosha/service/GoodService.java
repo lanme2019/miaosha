@@ -2,6 +2,7 @@ package com.lanme.miaosha.service;
 
 import com.lanme.miaosha.dao.GoodsDao;
 import com.lanme.miaosha.model.Goods;
+import com.lanme.miaosha.model.MiaoshaGoods;
 import com.lanme.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,11 @@ public class GoodService {
 
     public GoodsVo getGoodVoByGoodsId(long goodsId) {
         return goodsDao.getGoodsVoByGoodsId(goodsId);
+    }
+
+    public void reduceStock(GoodsVo goods) {
+        MiaoshaGoods g = new MiaoshaGoods();
+        g.setGoodsId(goods.getId());
+        goodsDao.reduceStock(g);
     }
 }
