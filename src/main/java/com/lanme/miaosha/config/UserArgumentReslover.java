@@ -49,12 +49,16 @@ public class UserArgumentReslover implements HandlerMethodArgumentResolver {
             return null;
         }
         String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
+        System.out.println("访问成功");
         return miaoshaUserService.getByToken(response,token);
     }
 
 
     private String getCookieValue(HttpServletRequest request,String  cookieName){
         Cookie[] cookies = request.getCookies();
+        if (cookies == null){
+            return null;
+        }
         for (Cookie cookie : cookies) {
             if(cookie.getName().equals(cookieName)) {
                 return cookie.getValue();

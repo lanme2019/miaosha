@@ -27,7 +27,7 @@ spring:
     password: 123
     filters: stat
     maxActive: 1000
-    initialSize: 100
+    initialSize: 500
     maxWait: 60000
     minIdle: 500
     timeBetweenEvictionRunsMillis: 60000
@@ -69,7 +69,7 @@ spring:
         max-idle: 500
         max-wait: 500
         max-active: 1000
-    timeout: 10
+    timeout: 200
 mybatis:
   type-aliases-package: com.lanme.miaosha.model
   mapper-locations: classpath:com/lanme/miaosha/dao/*.xml

@@ -34,9 +34,17 @@ public class HelloController {
         return Result.success(user);
     }
 
+
+    @RequestMapping("/redis/userget")
+    @ResponseBody
+    public Result getRedisUser(Model model,MiaoshaUser user){
+        return Result.success(user);
+    }
+
     @RequestMapping("/hello")
     public String helloTest(Model model, MiaoshaUser user){
        model.addAttribute("user",user);
+
        return "hello";
     }
 
