@@ -22,9 +22,10 @@ spring:
 
   datasource:
     # druid
-    url: jdbc:mysql://139.199.127.63:3306/miaosha?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    #url: jdbc:mysql://rm-2ze8a0jt9x45r19k7o.mysql.rds.aliyuncs.com:3306/heat_db?noAccessToProcedureBodies=true&characterEncoding=utf8
+    url : jdbc:mysql://123.56.138.35:3306/miaosha?noAccessToProcedureBodies=true&characterEncoding=utf8
     username: root
-    password: 123
+    password: Hlxt@316
     filters: stat
     maxActive: 1000
     initialSize: 500
@@ -61,9 +62,10 @@ spring:
         max-interval: 10000
         multiplier: 1.0
   redis:
-    host: 139.199.127.63
+    #139.199.127.63
+    host: 123.56.138.35
     port: 6379
-    password: LuanMingLM111andwoshinidedashu1
+    password: LuanMingLM111
     jedis:
       pool:
         max-idle: 500
@@ -76,3 +78,6 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+#    url: jdbc:mysql://139.199.127.63:3306/miaosha?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123

@@ -49,7 +49,7 @@ public class UserArgumentReslover implements HandlerMethodArgumentResolver {
             return null;
         }
         String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
-        System.out.println("访问成功");
+//        System.out.println("访问成功");
         return miaoshaUserService.getByToken(response,token);
     }
 
