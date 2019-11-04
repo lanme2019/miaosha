@@ -1,55 +1,61 @@
 package com.lanme.miaosha.service;
 
+import java.util.Date;
+
 import com.lanme.miaosha.dao.OrderDao;
 import com.lanme.miaosha.model.MiaoshaOrder;
 import com.lanme.miaosha.model.MiaoshaUser;
 import com.lanme.miaosha.model.OrderInfo;
+import com.lanme.miaosha.prefix.OrderKey;
+import com.lanme.miaosha.redis.RedisService;
 import com.lanme.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 
-/**
- * @author lanme2019
- * @version 1.0
- * @date 2019/10/24 17:40
- */
 
 @Service
 public class OrderService {
+	
+	@Autowired
+	OrderDao orderDao;
+	
+	@Autowired
+	RedisService redisService;
+	
+	public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(long userId, long goodsId) {
+		//return orderDao.getMiaoshaOrderByUserIdGoodsId(userId, goodsId);
+		return redisService.get(OrderKey.getMiaoshaOrderByUidGid, ""+userId+"_"+goodsId, MiaoshaOrder.class);
+	}
+	
+	public OrderInfo getOrderById(long orderId) {
+		return orderDao.getOrderById(orderId);
+	}
+	
 
-    @Autowired
-    OrderDao orderDao;
+	@Transactional
+	public OrderInfo createOrder(MiaoshaUser user, GoodsVo goods) {
+		OrderInfo orderInfo = new OrderInfo();
+		orderInfo.setCreateDate(new Date());
+		orderInfo.setDeliveryAddrId(0L);
+		orderInfo.setGoodsCount(1);
+		orderInfo.setGoodsId(goods.getId());
+		orderInfo.setGoodsName(goods.getGoodsName());
+		orderInfo.setGoodsPrice(goods.getMiaoshaPrice());
+		orderInfo.setOrderChannel(1);
+		orderInfo.setStatus(0);
+		orderInfo.setUserId(user.getId());
+		long orderId = orderDao.insert(orderInfo);
+		MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
+		miaoshaOrder.setGoodsId(goods.getId());
+		miaoshaOrder.setOrderId(orderId);
+		miaoshaOrder.setUserId(user.getId());
+		orderDao.insertMiaoshaOrder(miaoshaOrder);
+		
+		redisService.set(OrderKey.getMiaoshaOrderByUidGid, ""+user.getId()+"_"+goods.getId(), miaoshaOrder);
+		 
+		return orderInfo;
+	}
 
-
-    public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(Long id, long goodsId) {
-        return orderDao.getMiaoshaOrderByUserIdGoodsId(id, goodsId);
-    }
-
-    @Transactional
-    public OrderInfo creatStock(MiaoshaUser user, GoodsVo goods) {
-        OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setDeliveryAddrId(0L);
-        orderInfo.setCreateDate(new Date());
-        orderInfo.setGoodsCount(1);
-        orderInfo.setGoodsName(goods.getGoodsName());
-        orderInfo.setGoodsId(goods.getId());
-        orderInfo.setGoodsPrice(goods.getMiaoshaPrice());
-        orderInfo.setOrderChannel(1);
-        orderInfo.setUserId(user.getId());
-        orderInfo.setStatus(1);
-        //先建立普通订单
-        long orderId = orderDao.insert(orderInfo);
-        //在建立秒杀订单
-        MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
-        miaoshaOrder.setUserId(user.getId());
-        miaoshaOrder.setOrderId(orderId);
-        miaoshaOrder.setGoodsId(goods.getId());
-
-        orderDao.insertMiaoshaOrder(miaoshaOrder);
-        return orderInfo;
-
-    }
 }

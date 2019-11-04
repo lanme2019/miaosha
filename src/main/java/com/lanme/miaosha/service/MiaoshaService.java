@@ -28,7 +28,7 @@ public class MiaoshaService {
         //减库存 下订单 写入秒杀订单
         goodService.reduceStock(goods);
 
-        return orderService.creatStock(user,goods);
+        return orderService.createOrder(user,goods);
 
     }
 }

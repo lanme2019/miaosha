@@ -22,10 +22,9 @@ spring:
 
   datasource:
     # druid
-    #url: jdbc:mysql://rm-2ze8a0jt9x45r19k7o.mysql.rds.aliyuncs.com:3306/heat_db?noAccessToProcedureBodies=true&characterEncoding=utf8
-    url : jdbc:mysql://123.56.138.35:3306/miaosha?noAccessToProcedureBodies=true&characterEncoding=utf8
+    url: jdbc:mysql://139.199.127.63:3306/miaosha?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
-    password: Hlxt@316
+    password: 123
     filters: stat
     maxActive: 1000
     initialSize: 500
@@ -63,21 +62,22 @@ spring:
         multiplier: 1.0
   redis:
     #139.199.127.63
-    host: 123.56.138.35
+    host: lanme2019.redis.rds.aliyuncs.com
     port: 6379
-    password: LuanMingLM111
+    password: Lanme2019
+#    host: 139.199.127.63
+#    port: 6379
+#    password: LuanMingLM111andwoshinidedashu1
     jedis:
       pool:
         max-idle: 500
         max-wait: 500
         max-active: 1000
     timeout: 200
+
 mybatis:
   type-aliases-package: com.lanme.miaosha.model
   mapper-locations: classpath:com/lanme/miaosha/dao/*.xml
   configuration:
     map-underscore-to-camel-case: true
 
-#    url: jdbc:mysql://139.199.127.63:3306/miaosha?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
-#    username: root
-#    password: 123

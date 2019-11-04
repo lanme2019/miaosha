@@ -7,9 +7,6 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +31,7 @@ public class UserUtil {
 			users.add(user);
 		}
 		System.out.println("create user");
-////		//插入数据库
+//		//插入数据库
 //		Connection conn = DBUtil.getConn();
 //		String sql = "insert into miaosha_user(login_count, nickname, register_date, salt, password, id)values(?,?,?,?,?,?)";
 //		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -85,7 +82,7 @@ public class UserUtil {
 			JSONObject jo = JSON.parseObject(response);
 			String token = jo.getString("data");
 			System.out.println("create token : " + user.getId());
-			
+
 			String row = user.getId()+","+token;
 			raf.seek(raf.length());
 			raf.write(row.getBytes());
@@ -98,6 +95,6 @@ public class UserUtil {
 	}
 	
 	public static void main(String[] args)throws Exception {
-		createUser(5000);
+		createUser(500);
 	}
 }
