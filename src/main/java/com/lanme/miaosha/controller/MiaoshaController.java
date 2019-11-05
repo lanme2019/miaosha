@@ -6,10 +6,13 @@ import com.lanme.miaosha.common.Result;
 import com.lanme.miaosha.model.MiaoshaOrder;
 import com.lanme.miaosha.model.MiaoshaUser;
 import com.lanme.miaosha.model.OrderInfo;
+import com.lanme.miaosha.prefix.GoodsKey;
+import com.lanme.miaosha.redis.RedisService;
 import com.lanme.miaosha.service.GoodService;
 import com.lanme.miaosha.service.MiaoshaService;
 import com.lanme.miaosha.service.OrderService;
 import com.lanme.miaosha.vo.GoodsVo;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +31,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/miaosha")
-public class MiaoshaController {
+public class MiaoshaController  implements InitializingBean {
 
     @Autowired
     GoodService goodService;
@@ -39,6 +42,8 @@ public class MiaoshaController {
     @Autowired
     MiaoshaService miaoshaService;
 
+    @Autowired
+    RedisService redisService;
 
 
     // qps:64/s
@@ -87,6 +92,19 @@ public class MiaoshaController {
         //减库存 下订单 写入秒杀订单
         OrderInfo orderInfo = miaoshaService.miaosha(user, goods);
         return Result.success(orderInfo);
+    }
+
+
+    // 预加载 库存到redis
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        List<GoodsVo> goodList = goodService.listGoodsVo();
+        if(goodList == null) {
+            return;
+        }
+        for (GoodsVo goodsVo : goodList) {
+            redisService.set(GoodsKey.getMiaoshaGoodsStock,""+goodsVo.getId(),goodsVo.getStockCount());
+        }
     }
 }
 

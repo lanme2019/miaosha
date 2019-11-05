@@ -5,6 +5,8 @@ import com.lanme.miaosha.model.MiaoshaUser;
 import com.lanme.miaosha.model.User;
 import com.lanme.miaosha.prefix.KeyPrefix;
 import com.lanme.miaosha.prefix.UserKey;
+import com.lanme.miaosha.rabbitmq.MQReceive;
+import com.lanme.miaosha.rabbitmq.MQSender;
 import com.lanme.miaosha.redis.RedisService;
 import com.lanme.miaosha.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,22 @@ public class HelloController {
 
     @Autowired
     RedisService redisService;
+
+    @Autowired
+    MQSender mqSender;
+
     @RequestMapping("/db/get")
     @ResponseBody
     public Result getById(){
         User user = userService.getById(1);
         return Result.success(user);
+    }
+
+    @RequestMapping("/mq")
+    @ResponseBody
+    public Result mqTest(){
+         mqSender.send("我是你的大");
+        return Result.success("succeed");
     }
 
 
